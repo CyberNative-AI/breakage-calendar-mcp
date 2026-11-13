@@ -1,0 +1,18 @@
+{
+  "name": "breakage-calendar-mcp",
+  "version": "0.1.0",
+  "description": "MCP server: which dated upstream breaks (image tags that move, AI models and APIs that shut down, CI runners that retire) hit your repository or dependency list, and the tested fix.",
+  "type": "module",
+  "bin": { "breakage-calendar-mcp": "bin/breakage-calendar-mcp.mjs" },
+  "files": ["bin", "src", "LICENSE", "README.md"],
+  "engines": { "node": ">=18.17" },
+  "license": "Apache-2.0",
+  "author": "CyberNative AI LLC <hello@cybernative.ai>",
+  "homepage": "https://cybernative.ai/breakage-calendar/",
+  "repository": { "type": "git", "url": "https://github.com/CyberNative-AI/breakage-calendar-mcp" },
+  "keywords": ["mcp", "model-context-protocol", "breaking-changes", "deprecation", "end-of-life", "dependencies", "coding-agent"],
+  "mcpName": "ai.cybernative/breakage-calendar",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

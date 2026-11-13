@@ -1,0 +1,42 @@
+{
+  "manifest_version": "0.3",
+  "name": "breakage-calendar-mcp",
+  "display_name": "Breakage Calendar",
+  "version": "0.1.0",
+  "description": "Which dated upstream breaks (image tags that move, AI models and APIs that shut down, CI runners that retire) hit your repository or dependency list, and the tested fix.",
+  "long_description": "Reads the public Breakage Calendar from cybernative.ai and runs each date's own published search over a dependency list, file contents, or a project folder you allow. Each finding says whether it hits or may hit, what changes, who is affected, how to check, and the fix; for a tested fix, the day we ran it. Nothing from your project is sent anywhere: the server makes two GET requests for the public calendar files.",
+  "author": { "name": "CyberNative AI LLC", "email": "hello@cybernative.ai", "url": "https://cybernative.ai/" },
+  "repository": { "type": "git", "url": "https://github.com/CyberNative-AI/breakage-calendar-mcp.git" },
+  "homepage": "https://github.com/CyberNative-AI/breakage-calendar-mcp",
+  "documentation": "https://cybernative.ai/breakage-calendar/",
+  "support": "https://github.com/CyberNative-AI/breakage-calendar-mcp/issues",
+  "server": {
+    "type": "node",
+    "entry_point": "server/bin/breakage-calendar-mcp.mjs",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/bin/breakage-calendar-mcp.mjs", "--roots", "${user_config.project_folders}"]
+    }
+  },
+  "tools": [
+    { "name": "check_dependencies", "description": "Dated breaks for a dependency list, with the fix" },
+    { "name": "check_files", "description": "Dated breaks in file contents you pass" },
+    { "name": "check_repository", "description": "Dated breaks in a project folder you allowed" },
+    { "name": "list_upcoming_breaks", "description": "Breakage Calendar dates still to come" },
+    { "name": "get_break", "description": "One dated break in full, with sources" }
+  ],
+  "tools_generated": false,
+  "keywords": ["breaking changes", "deprecation", "end of life", "dependencies", "docker", "ci", "ai models"],
+  "license": "Apache-2.0",
+  "privacy_policies": ["https://cybernative.ai/privacy/"],
+  "compatibility": { "platforms": ["darwin", "win32", "linux"], "runtimes": { "node": ">=18.17.0" } },
+  "user_config": {
+    "project_folders": {
+      "type": "directory",
+      "title": "Project folders",
+      "description": "Folders check_repository may read. Leave empty to use only dependency lists and file contents.",
+      "multiple": true,
+      "required": false
+    }
+  }
+}

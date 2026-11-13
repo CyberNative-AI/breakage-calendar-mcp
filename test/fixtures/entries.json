@@ -1,0 +1,1145 @@
+{
+ "title": "CyberNative Breakage Calendar",
+ "page": "https://cybernative.ai/breakage-calendar/",
+ "updated": "2026-11-12",
+ "entries": [
+  {
+   "id": "2026-10-01-tls-200-day-certificates-first-expiries",
+   "added": "2026-10-18",
+   "short": "First 200-day TLS certificates expire",
+   "date": "2026-10-01",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": null,
+   "title": "The first 200-day TLS certificates reach their expiry date",
+   "area": "Certificates",
+   "what": "Since 15 March 2026, publicly trusted TLS certificates can be valid for at most 200 days, down from 398. A certificate issued on 15 March with the full 200 days expired on 1 October 2026, so certificates now need renewing at least twice a year.",
+   "affected": "Anyone who renews certificates by hand or plans renewals around a once-a-year reminder. Automated renewal now has to succeed at least twice a year.",
+   "check": "Read your live certificate's dates (replace example.com with your host). If the gap between notBefore and notAfter is 200 days or less, it will not last a year.",
+   "checkCode": "echo | openssl s_client -connect example.com:443 \\\n  2>/dev/null | openssl x509 -noout -startdate -enddate",
+   "fix": {
+    "kind": "none",
+    "href": "https://cabforum.org/working-groups/server/baseline-requirements/requirements/",
+    "label": "CA/Browser Forum Baseline Requirements (dates in section 1.2.2)",
+    "testedAt": null
+   },
+   "sources": [
+    {
+     "label": "CA/Browser Forum TLS Baseline Requirements: maximum validity 200 days from 2026-03-15",
+     "href": "https://cabforum.org/working-groups/server/baseline-requirements/requirements/",
+     "checkedAt": "2026-10-14"
+    }
+   ]
+  },
+  {
+   "id": "2026-10-19-ubuntu-latest-26-04-python-ruby-setup",
+   "added": "2026-10-18",
+   "short": "ubuntu-latest → 26.04: Python/Ruby setup fails",
+   "date": "2026-10-19",
+   "dateEnd": "2026-11-19",
+   "datePrecision": "window",
+   "time": null,
+   "title": "GitHub moves ubuntu-latest to Ubuntu 26.04: setup-python and setup-ruby jobs fail for versions with no 26.04 build",
+   "area": "CI runners",
+   "what": "GitHub rolls the ubuntu-latest label from Ubuntu 24.04 to 26.04 over several weeks, starting 19 October and finishing by 19 November 2026. actions/setup-python and ruby/setup-ruby download a build made for the exact Ubuntu version, and far fewer builds exist for 26.04.",
+   "affected": "Jobs on ubuntu-latest that ask for a Python or Ruby version with no 26.04 build: an old version such as Python 3.8 or 3.9, or an exact patch version, including pins in .python-version or .ruby-version. In a sample of 548 active public repositories, 122 had at least one such job.",
+   "check": "Open our browser check and choose your repository folder. It reads only the workflow and version files and lists every step that fails at setup on 26.04, with its fix. To run your own tests on ubuntu-26.04 beside a 24.04 baseline every week, add our free Future CI workflow: https://github.com/CyberNative-AI/future-ci",
+   "checkCode": null,
+   "fix": {
+    "kind": "tested",
+    "href": "/tools/ubuntu-2604-check/",
+    "label": "Browser check and fixes per entry; tested route for Python 3.8 and 3.9 on 26.04 (none yet for Ruby before 3.2)",
+    "testedAt": "2026-10-12"
+   },
+   "sources": [
+    {
+     "label": "actions/runner-images issue #14748: ubuntu-latest becomes Ubuntu 26.04",
+     "href": "https://github.com/actions/runner-images/issues/14748",
+     "checkedAt": "2026-10-14"
+    }
+   ],
+   "see": {
+    "lead": "Playwright install fails on 26.04?",
+    "href": "/guides/playwright-ubuntu-26-04-chromium-not-supported/",
+    "label": "Upgrade to 1.61.0 or later — tested fix."
+   }
+  },
+  {
+   "id": "2026-11-02-github-macos-14-runner-retirement",
+   "added": "2026-10-18",
+   "short": "GitHub retires the macOS 14 runner",
+   "date": "2026-11-02",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": null,
+   "title": "GitHub Actions retires the macOS 14 runner image, and Xcode 15 and the iOS 17 simulators go with it",
+   "area": "CI runners",
+   "what": "GitHub retires the macOS 14 runner image on 2 November 2026. Xcode 15, the iOS 17, 18.1 and 18.2 simulator runtimes and the iPhone 15 simulator devices are installed only on the macOS 14 images.",
+   "affected": "Workflows that use macos-14, macos-14-large or macos-14-xlarge, and jobs that select Xcode 15, an iOS 17, 18.1 or 18.2 simulator or an iPhone 15 simulator, which no remaining image has.",
+   "check": "From your repository root, search the workflow files for the old labels (needs ripgrep), then check each matching job's Xcode and simulator selections.",
+   "checkCode": "rg -n --hidden --glob '*.yml' --glob '*.yaml' \\\n  '\\bmacos-14(-large|-xlarge)?\\b' .github/workflows",
+   "fix": {
+    "kind": "guide",
+    "href": "https://github.com/CyberNative-AI/.github/tree/main/notes/macos14-brownout#check-xcode-and-simulator-selections-too",
+    "label": "Replacement by architecture, and which Xcode and simulators each image has",
+    "testedAt": null
+   },
+   "sources": [
+    {
+     "label": "GitHub changelog: macOS 14 runner image retirement (1 October 2026)",
+     "href": "https://github.blog/changelog/2026-10-01-github-actions-macos-14-runner-image-retirement/",
+     "checkedAt": "2026-10-14"
+    }
+   ]
+  },
+  {
+   "id": "2027-03-15-tls-100-day-certificates",
+   "added": "2026-10-18",
+   "short": "TLS certificate maximum drops to 100 days",
+   "date": "2027-03-15",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": null,
+   "title": "Publicly trusted TLS certificates drop to a 100-day maximum",
+   "area": "Certificates",
+   "what": "From 15 March 2027, publicly trusted TLS certificates can be valid for at most 100 days, and domain validation can be reused for at most 100 days, down from 200 for both.",
+   "affected": "Anyone who renews certificates by hand or on a fixed schedule built around 200-day certificates. Renewal will be needed at least every 100 days, about four times a year.",
+   "check": "Read your live certificate's dates (replace example.com with your host) to see how long your current certificates last.",
+   "checkCode": "echo | openssl s_client -connect example.com:443 \\\n  2>/dev/null | openssl x509 -noout -startdate -enddate",
+   "fix": {
+    "kind": "none",
+    "href": "https://cabforum.org/working-groups/server/baseline-requirements/requirements/",
+    "label": "CA/Browser Forum Baseline Requirements (dates in section 1.2.2)",
+    "testedAt": null
+   },
+   "sources": [
+    {
+     "label": "CA/Browser Forum TLS Baseline Requirements: maximum validity 100 days from 2027-03-15",
+     "href": "https://cabforum.org/working-groups/server/baseline-requirements/requirements/",
+     "checkedAt": "2026-10-14"
+    }
+   ],
+   "leadDays": 60
+  },
+  {
+   "id": "2027-01-14-openai-removes-gpt-4o-gpt-4-1",
+   "added": "2026-10-20",
+   "short": "OpenAI removes GPT-4o and GPT-4.1 from its API",
+   "date": "2027-01-14",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": null,
+   "title": "OpenAI removes GPT-4o, GPT-4o mini, GPT-4.1 and GPT-4.1 mini from its API",
+   "area": "AI APIs",
+   "what": "On 14 October 2026 OpenAI announced that GPT-4o (gpt-4o-2024-08-06, gpt-4o-2024-11-20), GPT-4o mini (gpt-4o-mini-2024-07-18), GPT-4.1 (gpt-4.1-2025-04-14) and GPT-4.1 mini (gpt-4.1-mini-2025-04-14) will be removed from the API on 14 January 2027. The recommended replacement is gpt-6-luna. OpenAI's notice lists dated snapshots and does not say whether the bare names (gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini) stop working. Every snapshot those names point to is on the removal list, and the model pages mark them Deprecated. 40 of the 42 listed libraries send only a bare name, so whether they are affected depends on what OpenAI does with those names.",
+   "affected": "Code that calls OpenAI through a library without passing a model. On 18 October we read the latest release of the 252 packages among the 15,000 most-downloaded on PyPI that depend directly on the OpenAI, Anthropic or Google SDKs. At least 42 of them send one of these models by default when you don't pass a model, among them langsmith (evaluator), openai-agents (compaction session only), google-adk, browser-use, llama-index-llms-openai, crewai, haystack-ai and pipecat-ai. Two name a dated snapshot from the notice (inspect-evals, nemo-gym); the other 40 send only the bare names. The full list gives each package's file and line. Callers who pass model= are not affected by that default; Azure deployments follow Azure's own schedule.",
+   "check": "In this order: (1) open your OpenAI usage dashboard grouped by model, which shows the library calls that actually ran; (2) for each of these models you see there, call GET /v1/models/<id> and read shutdown_date; (3) with your project's Python environment active, search its site-packages for these model names with the command below, or pass model= explicitly.",
+   "checkCode": "grep -rnE --include='*.py' \\\n  \"[\\\"'](openai/)?gpt-4(o|\\.1)\\\n(-mini)?(-20[0-9]{2}-[0-9]{2}-[0-9]{2})?\\\n[\\\"']\" \\\n  \"$(python3 -c 'import sysconfig\nprint(sysconfig.get_paths()[\"purelib\"])')\"",
+   "leadDays": 30,
+   "fix": {
+    "kind": "none",
+    "href": "https://developers.openai.com/api/docs/deprecations",
+    "label": "OpenAI deprecations page (entry of 14 October 2026)",
+    "testedAt": null
+   },
+   "sources": [
+    {
+     "label": "OpenAI API deprecations: entry of 14 October 2026 (GPT-4 series, shutdown 14 January 2027)",
+     "href": "https://developers.openai.com/api/docs/deprecations",
+     "checkedAt": "2026-10-18"
+    },
+    {
+     "label": "OpenAI model page: GPT-4o (marked Deprecated)",
+     "href": "https://developers.openai.com/api/docs/models/gpt-4o",
+     "checkedAt": "2026-10-18"
+    }
+   ],
+   "icsDescriptionAddendum": "OpenAI's notice lists dated snapshots and does not say whether the bare names (gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini) stop working. Every snapshot those names point to is on the removal list, and the model pages mark them Deprecated. 40 of the 42 listed libraries send only a bare name, so whether they are affected depends on what OpenAI does with those names.",
+   "feedSummaryAddendum": "OpenAI's notice lists dated snapshots and does not say whether the bare names (gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini) stop working. Every snapshot those names point to is on the removal list, and the model pages mark them Deprecated. 40 of the 42 listed libraries send only a bare name, so whether they are affected depends on what OpenAI does with those names.",
+   "packagesNote": "Paths are relative to site-packages, with line numbers from the version we read on 18 October 2026; they can move in later releases. Listed: the 42 packages that two independent readings of the code, made without seeing each other's labels, both marked as sending one of these models by default.",
+   "packages": [
+    {
+     "package": "langsmith",
+     "version": "0.14.11",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "evaluator default (LLMEvaluator, provider openai)",
+     "fileLine": "langsmith/evaluation/llm_evaluator.py:87",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 307,
+     "note": null
+    },
+    {
+     "package": "openai-agents",
+     "version": "0.24.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1",
+     "role": "compaction session (OpenAIResponsesCompactionSession -> responses.compact)",
+     "fileLine": "agents/memory/openai_responses_compaction_session.py:119",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 1050,
+     "note": "Not the SDK's main default: that is gpt-5.6-luna. Only the compaction session sends gpt-4.1."
+    },
+    {
+     "package": "google-adk",
+     "version": "2.12.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "OpenAI integration model default",
+     "fileLine": "google/adk/integrations/openai/_openai_llm.py:369",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 1166,
+     "note": null
+    },
+    {
+     "package": "browser-use",
+     "version": "0.13.11",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "MCP server agent LLM default (ChatOpenAI)",
+     "fileLine": "browser_use/mcp/server.py:686",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 1353,
+     "note": null
+    },
+    {
+     "package": "llama-index-llms-openai",
+     "version": "0.8.3",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "OpenAIResponses class default model",
+     "fileLine": "llama_index/llms/openai/responses.py:105",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 2016,
+     "note": null
+    },
+    {
+     "package": "pyod",
+     "version": "3.6.7",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "hard-coded request (auto model selector)",
+     "fileLine": "pyod/utils/auto_model_selector.py:158",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 2413,
+     "note": null
+    },
+    {
+     "package": "swesmith",
+     "version": "0.0.9",
+     "versionReadOn": "2026-10-18",
+     "modelId": "openai/gpt-4o",
+     "role": "issue generation default (via litellm)",
+     "fileLine": "swesmith/issue_gen/generate.py:91",
+     "also": [
+      {
+       "modelId": "gpt-4o",
+       "role": "hard-coded request (difficulty rater)",
+       "fileLine": "swesmith/train/difficulty_rater/get_difficulties.py:31"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 2431,
+     "note": null
+    },
+    {
+     "package": "dashscope",
+     "version": "1.27.7",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "CLI (acli) OpenAI provider default",
+     "fileLine": "dashscope/acli/providers/openai.py:19",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 2529,
+     "note": null
+    },
+    {
+     "package": "livekit-plugins-openai",
+     "version": "1.8.8",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1",
+     "role": "main default (OpenAI LLM)",
+     "fileLine": "livekit/plugins/openai/llm.py:98",
+     "also": [
+      {
+       "modelId": "gpt-4.1",
+       "role": "main default (Responses LLM)",
+       "fileLine": "livekit/plugins/openai/responses/llm.py:227"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 2567,
+     "note": null
+    },
+    {
+     "package": "crewai",
+     "version": "1.15.28",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1-mini",
+     "role": "fallback default LLM when no model or env is set (DEFAULT_LLM_MODEL)",
+     "fileLine": "crewai/constants.py:355",
+     "also": [
+      {
+       "modelId": "gpt-4o",
+       "role": "OpenAI provider completion default",
+       "fileLine": "crewai/llms/providers/openai/completion.py:372"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 2572,
+     "note": null
+    },
+    {
+     "package": "graphifyy",
+     "version": "0.9.92",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1-mini",
+     "role": "OpenAI backend default",
+     "fileLine": "graphify/llm.py:179",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 3097,
+     "note": "The Azure backend default at llm.py:218 is not counted."
+    },
+    {
+     "package": "daft",
+     "version": "0.7.26",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "OpenAI provider prompter default",
+     "fileLine": "daft/ai/openai/provider.py:24",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 3252,
+     "note": null
+    },
+    {
+     "package": "chonkie",
+     "version": "1.7.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1",
+     "role": "OpenAIGenie default",
+     "fileLine": "chonkie/genie/openai.py:37",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 3645,
+     "note": "The Azure genie default is not counted."
+    },
+    {
+     "package": "codewords-client",
+     "version": "0.4.11",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1-mini",
+     "role": "SubAgent default (sent through openai-agents)",
+     "fileLine": "codewords_client/agent.py:50",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 3901,
+     "note": "Routed through CodeWords' own OpenAI pass-through."
+    },
+    {
+     "package": "pipecat-ai",
+     "version": "1.12.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1",
+     "role": "main default (OpenAI LLM service)",
+     "fileLine": "pipecat/services/openai/base_llm.py:211",
+     "also": [
+      {
+       "modelId": "gpt-4.1",
+       "role": "main default (OpenAILLMService settings)",
+       "fileLine": "pipecat/services/openai/llm.py:56"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 3911,
+     "note": null
+    },
+    {
+     "package": "inspect-evals",
+     "version": "0.25.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-2024-08-06",
+     "role": "judge default (agentharm refusal and semantic judges)",
+     "fileLine": "inspect_evals/agentharm/agentharm.py:31",
+     "also": [
+      {
+       "modelId": "gpt-4o-2024-08-06",
+       "role": "judge default",
+       "fileLine": "inspect_evals/agentharm/scorer.py:45"
+      },
+      {
+       "modelId": "gpt-4o-mini",
+       "role": "judge default (healthbench)",
+       "fileLine": "inspect_evals/healthbench/healthbench.py:23"
+      }
+     ],
+     "usesNamedSnapshot": true,
+     "aliasOnly": false,
+     "pypiRank": 4199,
+     "note": null
+    },
+    {
+     "package": "evidently",
+     "version": "0.7.23",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "LLM-judge descriptor default (provider openai)",
+     "fileLine": "evidently/descriptors/generated_descriptors.py:721",
+     "also": [
+      {
+       "modelId": "gpt-4o-mini",
+       "role": "guardrail default (PII guard)",
+       "fileLine": "evidently/guardrails/guards/pii_llm.py:19"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 4340,
+     "note": null
+    },
+    {
+     "package": "weave",
+     "version": "0.53.12",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "prompt completion default (via litellm)",
+     "fileLine": "weave/prompt/prompt.py:561",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 4437,
+     "note": null
+    },
+    {
+     "package": "graphiti-core",
+     "version": "0.31.1",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1-mini",
+     "role": "OpenAI client defaults (LLM client and reranker)",
+     "fileLine": "graphiti_core/llm_client/openai_generic_client.py:35",
+     "also": [
+      {
+       "modelId": "gpt-4.1-mini",
+       "role": "reranker default",
+       "fileLine": "graphiti_core/cross_encoder/openai_reranker_client.py:32"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 4948,
+     "note": null
+    },
+    {
+     "package": "haystack-ai",
+     "version": "3.4.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1-mini",
+     "role": "default chat generator of LLMRanker",
+     "fileLine": "haystack/components/rankers/llm_ranker.py:23",
+     "also": [
+      {
+       "modelId": "gpt-4.1-mini",
+       "role": "default chat generator of QueryExpander",
+       "fileLine": "haystack/components/query/query_expander.py:134"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 5108,
+     "note": "The Azure generator default is not counted."
+    },
+    {
+     "package": "npmai-agents",
+     "version": "1.0.2",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "OpenAIBackend default",
+     "fileLine": "npmai_agents/core.py:113",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 6090,
+     "note": null
+    },
+    {
+     "package": "langextract",
+     "version": "1.7.1",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "OpenAI provider default model_id",
+     "fileLine": "langextract/providers/openai.py:111",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 6308,
+     "note": null
+    },
+    {
+     "package": "headroom-ai",
+     "version": "0.41.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "memory backend extraction default (mem0)",
+     "fileLine": "headroom/memory/backends/mem0.py:72",
+     "also": [
+      {
+       "modelId": "gpt-4o",
+       "role": "AnyLLM backend fallback",
+       "fileLine": "headroom/backends/anyllm.py:283"
+      },
+      {
+       "modelId": "gpt-4o",
+       "role": "memory eval judge default",
+       "fileLine": "headroom/evals/memory/judge.py:50"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 6882,
+     "note": null
+    },
+    {
+     "package": "zernio-sdk",
+     "version": "1.4.1244",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "AI OpenAI provider default",
+     "fileLine": "late/ai/providers/openai.py:33",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 7022,
+     "note": "Same file as late-sdk."
+    },
+    {
+     "package": "aider-chat",
+     "version": "0.86.2",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "main default when no model is given (DEFAULT_MODEL_NAME)",
+     "fileLine": "aider/models.py:30",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 7023,
+     "note": null
+    },
+    {
+     "package": "late-sdk",
+     "version": "1.4.1244",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "AI OpenAI provider default",
+     "fileLine": "late/ai/providers/openai.py:33",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 8287,
+     "note": "Same file as zernio-sdk."
+    },
+    {
+     "package": "conductor-python",
+     "version": "2.0.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "openai/gpt-4o",
+     "role": "OpenAI Assistants agent default (prefix stripped before the call)",
+     "fileLine": "conductor/ai/agents/ext.py:33",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 9207,
+     "note": null
+    },
+    {
+     "package": "langwatch-scenario",
+     "version": "1.6.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "openai/gpt-4.1",
+     "role": "report aggregation default (via litellm)",
+     "fileLine": "scenario/report/_aggregate.py:68",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 9661,
+     "note": null
+    },
+    {
+     "package": "lightrag-hku",
+     "version": "1.5.7",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "evaluation LLM default (EVAL_LLM_MODEL)",
+     "fileLine": "lightrag/evaluation/eval_rag_quality.py:157",
+     "also": [
+      {
+       "modelId": "gpt-4o-mini",
+       "role": "llm_model_name default read by openai_complete",
+       "fileLine": "lightrag/lightrag.py:707"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 9809,
+     "note": null
+    },
+    {
+     "package": "dbt-osmosis",
+     "version": "1.5.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "main default (OPENAI_MODEL env fallback)",
+     "fileLine": "dbt_osmosis/core/llm.py:208",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 10658,
+     "note": null
+    },
+    {
+     "package": "nemo-gym",
+     "version": "0.7.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4.1-2025-04-14",
+     "role": "judge default (verifif)",
+     "fileLine": "resources_servers/verifif/app.py:123",
+     "also": [
+      {
+       "modelId": "openai/gpt-4o-mini",
+       "role": "agent model default (kilocode agent)",
+       "fileLine": "responses_api_agents/kilocode_agent/app.py:221"
+      }
+     ],
+     "usesNamedSnapshot": true,
+     "aliasOnly": false,
+     "pypiRank": 10667,
+     "note": "Goes to api.openai.com only when no policy base URL is set."
+    },
+    {
+     "package": "autogen",
+     "version": "0.14.1",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "RAG query-engine fallback LLM when none is passed",
+     "fileLine": "autogen/agentchat/contrib/graph_rag/neo4j_graph_query_engine.py:87",
+     "also": [
+      {
+       "modelId": "gpt-4o",
+       "role": "RAG query-engine fallback LLM",
+       "fileLine": "autogen/agentchat/contrib/rag/llamaindex_query_engine.py:54"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 10949,
+     "note": null
+    },
+    {
+     "package": "apache-airflow-providers-openai",
+     "version": "2.1.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "hook chat-completion default",
+     "fileLine": "airflow/providers/openai/hooks/openai.py:298",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 11405,
+     "note": null
+    },
+    {
+     "package": "cognee",
+     "version": "1.6.5",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "eval framework judge default (deepeval GEval)",
+     "fileLine": "cognee/eval_framework/eval_config.py:31",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 11520,
+     "note": null
+    },
+    {
+     "package": "embedchain",
+     "version": "0.1.128",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "hard-coded request (image loader)",
+     "fileLine": "embedchain/loaders/image.py:30",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 11548,
+     "note": null
+    },
+    {
+     "package": "textarena",
+     "version": "0.7.4",
+     "versionReadOn": "2026-10-18",
+     "modelId": "openai/gpt-4o",
+     "role": "hard-coded game-master model (via OpenRouter)",
+     "fileLine": "textarena/envs/GuessWho/env.py:12",
+     "also": [
+      {
+       "modelId": "openai/gpt-4o",
+       "role": "hard-coded game-master model (via OpenRouter)",
+       "fileLine": "textarena/envs/TwentyQuestions/env.py:17"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 12381,
+     "note": "Sent through OpenRouter, not directly to OpenAI."
+    },
+    {
+     "package": "hindsight-api-slim",
+     "version": "1.0.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "provider default for openai, the default provider",
+     "fileLine": "hindsight_api/config.py:1106",
+     "also": [
+      {
+       "modelId": "gpt-4o-mini",
+       "role": "fallback",
+       "fileLine": "hindsight_api/config.py:1137"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 12865,
+     "note": null
+    },
+    {
+     "package": "deepteam",
+     "version": "1.0.10",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "red-team evaluation model default",
+     "fileLine": "deepteam/red_teamer/red_teamer.py:73",
+     "also": [
+      {
+       "modelId": "gpt-4o-mini",
+       "role": "simulator/evaluation default",
+       "fileLine": "deepteam/red_team.py:18"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 13263,
+     "note": null
+    },
+    {
+     "package": "pdf2zh-next",
+     "version": "2.9.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "OpenAI translation engine default",
+     "fileLine": "pdf2zh_next/config/translate_engine_model.py:84",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 13752,
+     "note": "The Azure engine default is not counted."
+    },
+    {
+     "package": "sqlframe",
+     "version": "4.5.0",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "OpenAIConfig default model",
+     "fileLine": "sqlframe/base/dataframe.py:118",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 13992,
+     "note": null
+    },
+    {
+     "package": "ell-ai",
+     "version": "0.0.17",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o-mini",
+     "role": "autocommit message model default",
+     "fileLine": "ell/configurator.py:79",
+     "also": [],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 14228,
+     "note": null
+    },
+    {
+     "package": "forecasting-tools",
+     "version": "0.3.4",
+     "versionReadOn": "2026-10-18",
+     "modelId": "gpt-4o",
+     "role": "default forecast-bot LLM when none is given",
+     "fileLine": "forecasting_tools/forecast_bots/forecast_bot.py:961",
+     "also": [
+      {
+       "modelId": "gpt-4.1",
+       "role": "SmartSearcher default",
+       "fileLine": "forecasting_tools/agents_and_tools/research/smart_searcher.py:34"
+      }
+     ],
+     "usesNamedSnapshot": false,
+     "aliasOnly": true,
+     "pypiRank": 14977,
+     "note": null
+    }
+   ],
+   "see": {
+    "lead": "What the 23 October shutdown printed, and a check for your installed packages, are in",
+    "href": "/guides/openai-model-shutdown-gpt-image-1-does-not-exist/",
+    "label": "our OpenAI shutdown guide."
+   }
+  },
+  {
+   "id": "2026-11-19-postgres-latest-becomes-19",
+   "added": "2026-10-20",
+   "short": "postgres:latest becomes 19",
+   "date": "2026-11-19",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": null,
+   "title": "postgres:latest becomes 19: unpinned stacks stop starting",
+   "area": "Databases",
+   "what": "PostgreSQL 19 is planned for 19 November 2026 (release candidate 2 came out on 12 November). When it ships, the official Docker image's postgres, postgres:latest, postgres:alpine, postgres:trixie, postgres:bookworm, postgres:alpine3.24 and postgres:alpine3.23 tags move from 18 to 19. A stack that uses one of those tags and already holds data will not start once it pulls the new image and recreates the database container. In our tests on both release candidates the 19 container exited with code 1 (\"Error: in 18+ … there appears to be PostgreSQL data in /var/lib/postgresql/18/docker\", or \"database files are incompatible with server\" when PGDATA is set).",
+   "affected": "Self-hosted stacks that already hold data and use postgres, postgres:latest, postgres:alpine, postgres:trixie, postgres:bookworm, postgres:alpine3.24 or postgres:alpine3.23 (directly or through a registry mirror) without an @sha256 digest. Of 253 projects on the awesome-selfhosted list whose main compose file uses the official postgres image (278 counting test, dev and CI files), 31 use a tag that will move. We then narrowed this to the files a user is likely to copy, after seeing the scan. 9 of those match the two layouts that failed in our test, so existing installs will stop once they pull and recreate on or after 19 November: cal.diy, Hyperswitch, Payload's with-postgres template, Reactive Resume, Grist's Keycloak example, Retrom, Bracket, BookLogr and PodFetch. 4 of these 9 merged a change that moved the volume mount for PostgreSQL 18 (October 2025 to August 2026) and kept the moving tag. We read each project's compose files at its head on 19 October 2026; we did not read every install or run the projects themselves.",
+   "check": "Run this in the folder with your compose file. A line printed means that service moves to 19 on 19 November; it resolves ${VARIABLES} first and also catches mirrors such as public.ecr.aws/docker/library/postgres. For a service with build: instead of image:, read its Dockerfile FROM line: FROM postgres with no number, or with one of the tags above, moves too.",
+   "checkCode": "docker compose config --images |\n  grep -E '(^|/)postgres(:(latest|trixie|bookworm|alpine|alpine3\\.2[34]))?$'",
+   "fix": {
+    "kind": "tested",
+    "text": "Pin the major your database runs today: postgres:18 if it runs 18 (or 18-alpine, 18-trixie, 18-bookworm). We tested this with two 1,000-row 18 databases, one in the default layout and one with PGDATA set, on 18.6 and 19 RC 1 (30 October) and on 18.7 and 19 RC 2 (13 November): 19 refused both each time, and both opened again on postgres:18 with all 1,000 rows. Upgrade to 19 later with pg_upgrade or a dump and restore. Do not run docker compose down -v as a fix: it can delete the database volume.",
+    "code": "image: postgres:18",
+    "testedAt": "2026-11-13"
+   },
+   "sources": [
+    {
+     "label": "PostgreSQL: PostgreSQL 18.7, 17.12, 16.16, 15.20, 14.25, and 19 RC 2 released (12 November 2026), with the planned general availability date",
+     "href": "https://www.postgresql.org/about/news/postgresql-187-1712-1616-1520-1425-and-19-rc-2-released-3442/",
+     "checkedAt": "2026-11-13"
+    },
+    {
+     "label": "Docker Hub: postgres official image, supported tags and the PGDATA change in 18 and above",
+     "href": "https://hub.docker.com/_/postgres",
+     "checkedAt": "2026-10-19"
+    }
+   ],
+   "see": {
+    "lead": "The exact errors, what Compose shows, and two upgrades to 19 that ran are in",
+    "href": "/guides/postgres-latest-19-docker-error-in-18-upgrade/",
+    "label": "our PostgreSQL 19 Docker guide."
+   }
+  },
+  {
+   "id": "2027-01-13-github-ssh-sha1-rsa-removed",
+   "added": "2026-10-22",
+   "short": "GitHub SSH stops accepting old RSA clients",
+   "date": "2027-01-13",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": null,
+   "title": "GitHub permanently stops accepting SHA-1 RSA signatures and one key exchange over SSH",
+   "area": "Git hosting",
+   "what": "From 13 January 2027, github.com permanently stops accepting RSA signatures made with SHA-1 (ssh-rsa) and the diffie-hellman-group-exchange-sha256 key exchange, after brownouts on 4 November and 9 December 2026. Only Git over SSH is affected: GitHub says remotes that start with https:// are not. In our own test, against a stand-in for GitHub's server, 10 of 32 SSH client stacks broke, all only with an RSA key. Executed by us; not independently reproduced.",
+   "affected": "Two parts of the change can break a connection to github.com over SSH. The first is SHA-1 signatures, which some old clients are limited to when they use an RSA key. Since 15 March 2022, GitHub has required SHA-2 signatures for RSA keys added on or after 2 November 2021. The SHA-1 removal therefore newly affects only older RSA keys used with SHA-1 signatures. A working RSA connection alone does not tell you the key's age. The second is the key exchange. The key-exchange removal can affect a client that has no other key exchange in common with GitHub, regardless of the key's type or age. In our test, CentOS 7's libssh2 1.8.0 failed that way, because the one being removed is the only one it shares with github.com. Git's own ssh command is usually OpenSSH, which GitHub lists as fine from 7.2p1. The breaks we found were in programs that use a library instead: Python code with paramiko, Node code with ssh2, Java with JSch, Go with x/crypto/ssh, PuTTY's plink, and curl or other programs built on libssh2. That includes Debian 12's libssh2, and Debian 12 has long-term support until 30 June 2028. On GitHub Enterprise Server the change comes with version 3.25 instead. To test it, we set our own OpenSSH 10.0 server to github.com's current SSH algorithm lists, removed those two, and connected from 35 client stacks with RSA, ECDSA and Ed25519 keys, twice each; 32 of them worked before the removal. 10 of those 32 broke, all only with the RSA key: PuTTY 0.70 and 0.73 (Ubuntu 18.04 and 20.04), paramiko 2.4.2 and 2.8.1, node ssh2 0.8.9 and 1.0.0, the original JSch 0.1.55 (com.jcraft), Go x/crypto from 17 November 2021, and curl with libssh2 1.10.0 (Debian 12) and 1.8.0 (CentOS 7). All five OpenSSH clients we tested kept working. The newest versions we tried of paramiko, node ssh2, Go x/crypto, Ruby net-ssh, PuTTY and libssh2 passed too, and so did the maintained JSch fork com.github.mwiede, unlike the original com.jcraft JSch 0.1.55, the only original JSch version we tried. Every break was below a minimum version in GitHub's table, or was an old version of a library the table does not list. This was our stand-in, not GitHub's server; we will check github.com during the 4 November brownout. We did not test Windows clients, TeamCity, JGit, libgit2 builds, Dropbear or ssh-agent setups. Executed by us; not independently reproduced. Update, 4 November: from our location, github.com was in the brownout from about 08:30 to 22:00 UTC (we checked every 30 minutes). During it, curl with CentOS 7's libssh2 1.8.0 failed with \"curl: (2) Failure establishing ssh session\", and old paramiko waited about 40 seconds before printing a misleading key-file error. The other old clients printed the same errors as in our earlier test. We tested with a key GitHub did not know, and we will check again on 9 December.",
+   "check": "Only remotes that do not start with https:// matter, and git remote -v lists them. ssh-add -l shows the type of each key in your SSH agent, in brackets at the end of its line; ssh-keygen -lf followed by a key file does the same for a key on disk. Ed25519 and ECDSA avoid the SHA-1 RSA change; the client still needs a supported key exchange. So whatever the key, find what makes the connection and its version. The next commands print the installed paramiko, ssh2 and Go x/crypto versions, PuTTY's version and the libssh2 version your curl uses; run each where that tool or project is installed. For Java, look for jsch in mvn dependency:tree or gradle dependencies. Compare the versions with the fix below. A program that bundles its own SSH library will not show up here.",
+   "checkCode": "git remote -v\nssh-add -l\npip show paramiko | grep Version\nnpm ls ssh2\ngo list -m golang.org/x/crypto\nplink -V\ncurl -V | grep -o 'libssh2/[0-9.]*'",
+   "fix": {
+    "kind": "tested",
+    "text": "Switch to an Ed25519 or ECDSA key. In our test it worked on every stack that can load one, old versions included, and GitHub says these keys keep working. Make one as below, add the .pub file to GitHub as an SSH key or a deploy key, and point your tool at it. The original JSch 0.1.55 loads ECDSA keys but not Ed25519. Or upgrade the client. These versions passed with an RSA key: paramiko 2.9.0, ssh2 1.17.0, the JSch fork com.github.mwiede 0.1.66, Go x/crypto v0.1.0, PuTTY 0.76 and libssh2 1.11.1. GitHub's table asks for Go x/crypto 0.16.0 and PuTTY 0.82, so aim for those or later. CentOS 7's libssh2 1.8.0 loads neither key type, so it has no key workaround: move that job to a newer system. Tested on 21 October against our stand-in server, not GitHub's. Executed by us; not independently reproduced.",
+    "code": "ssh-keygen -t ed25519 \\\n  -f ~/.ssh/github_ed25519\ncat ~/.ssh/github_ed25519.pub",
+    "testedAt": "2026-10-21"
+   },
+   "sources": [
+    {
+     "label": "GitHub changelog: Security improvements for SSH (22 September 2026; brownouts 4 November and 9 December, removal 13 January 2027, minimum client versions)",
+     "href": "https://github.blog/changelog/2026-09-22-security-improvements-for-ssh/",
+     "checkedAt": "2026-10-21"
+    },
+    {
+     "label": "GitHub blog: Improving Git protocol security on GitHub (SHA-2 signatures required from 15 March 2022 for RSA keys added on or after 2 November 2021)",
+     "href": "https://github.blog/security/application-security/improving-git-protocol-security-github/",
+     "checkedAt": "2026-10-21"
+    },
+    {
+     "label": "Debian 12 bookworm release page (long-term support until 30 June 2028)",
+     "href": "https://www.debian.org/releases/bookworm/",
+     "checkedAt": "2026-10-21"
+    }
+   ],
+   "leadDays": 28,
+   "see": {
+    "lead": "The error each client prints, and its fix, are in",
+    "href": "/guides/github-ssh-key-too-short-ssh-rsa-brownout/",
+    "label": "our GitHub SSH guide."
+   }
+  },
+  {
+   "id": "2026-12-25-ruby-4-1-removes-old-c-apis",
+   "added": "2026-10-22",
+   "short": "Ruby 4.1 (expected): old native gems fail",
+   "date": "2026-12-25",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": "expected (Ruby's usual Christmas release; not announced)",
+   "title": "Ruby 4.1 (expected 25 December): gems with old C extensions stop installing",
+   "area": "Ruby",
+   "what": "Ruby 4.1.0 is expected on 25 December 2026. Every new Ruby version from 3.0 in 2020 to 4.0 in 2025 came out on 25 December, but Ruby has not announced this date. Ruby 4.1 removes C functions that have been deprecated for years, among them the untyped data-object functions such as Data_Wrap_Struct and Data_Get_Struct, the taint macros and rb_iterate, so gems whose native extension still uses them stop installing or loading. We attempted installs and three candidate require names for 165 native-extension gems among the top 3,000 by all-time downloads, using an October 2026 snapshot. Twenty-two installed on Ruby 4.0.7 and showed a build, load or native-extension regression on 4.1.0-preview1; this includes atomic's fallback to pure Ruby. We expect 21 of these regressions on the final release, seven among the top 1,000: eventmachine, thin, kostya-sigar, yajl-ruby, hiredis, therubyracer and ffi-yajl. Executed by us; not independently reproduced.",
+   "affected": "Apps and images that install one of these gems on Ruby 4.1. Besides the seven above, they are cbor, timfel-krb5-auth, atomic, iconv, hpricot, rblineprof, zookeeper, ruby-stemmer, panko_serializer, algorithms, ruby-debug-ide, debase, bson_ext and numo-narray. Most fail at gem install with a compile error. panko_serializer and rblineprof install, then fail at require with \"undefined symbol: Data_Wrap_Struct\". atomic loaded after warning that it was using its pure-Ruby implementation; we did not measure its speed. thin fails through eventmachine and ruby-debug-ide through debase; bson_ext, debase and numo-narray break on other changes to Ruby's C interface. rinku failed with \"undefined symbol: ruby_abi_version\". Ruby's abi.h says released versions do not define this preview ABI number, so we infer this failure will not affect the final release; we did not test a final-release build. We exclude rinku from the 21 expected regressions. Two more changes reach apps without these gems. tsort moves from a default gem to a bundled gem, so under bundle exec it must be in the resolved bundle, either directly or through a dependency. Without it, our preview probes for molinillo 0.8.0, mobility 1.3.2, packwerk 3.3.1 and facter 2.5.7 raised \"cannot load such file -- tsort\". CocoaPods 1.17.0 installs that molinillo without tsort; we did not run CocoaPods itself. And for 14 of the 26 popular gems that ship ready-built Linux binaries, the latest x86_64 Linux binary metadata excludes Ruby 4.1: nokogiri, ffi, pg, google-protobuf, prism, grpc, sqlite3, commonmarker, prometheus-client-mmap, re2, gitlab-glfm-markdown, tiny_tds, code_ownership and tiktoken_ruby. A compatible source package may be selected instead; building it requires a compiler and any required development libraries. Official Ruby slim images omit build tools by default, so check your build environment before upgrading. We attempted source installs and three candidate require names in the official ruby:4.0.7 and ruby:4.1.0-preview1 images on Linux x86_64 with GCC 12. The protocol accepts a successful install when none of the three names loads on either version; 17 of the 118 gems with no detected regression had that limitation. Twenty-one gems failed on the baseline too, for mixed reasons including version constraints, API errors and missing libraries; four builds timed out. Those results do not establish Ruby 4.1 compatibility. We tested latest releases, not older locked versions, and preview1, not final. The baseline packwerk and facter probes ended with unrelated private-constant and wrong-path errors after reaching the tsort warning; their preview LoadErrors diagnose the missing tsort, not a complete application test. Executed by us; not independently reproduced.",
+   "check": "Run this in the folder with your Gemfile.lock; it only reads the file. It prints each of the 21 gems, and molinillo, mobility, packwerk and facter, that your lockfile installs; gems you already pinned with a git line show up too. For the tsort error, a tsort gem spec in the resolved bundle can satisfy this dependency; a mention of tsort alone does not prove that it is available to the running bundle. Also look for the 14 gems with ready-built binaries if you build on an official Ruby slim image.",
+   "checkCode": "for g in eventmachine thin \\\n  kostya-sigar yajl-ruby hiredis \\\n  therubyracer ffi-yajl cbor \\\n  timfel-krb5-auth atomic iconv \\\n  hpricot rblineprof zookeeper \\\n  ruby-stemmer panko_serializer \\\n  algorithms ruby-debug-ide \\\n  debase bson_ext numo-narray \\\n  molinillo mobility packwerk \\\n  facter; do\n  grep -nE \"^ {4}$g \\(\" Gemfile.lock\ndone",
+   "fix": {
+    "kind": "tested",
+    "text": "Upgrade each gem when its maintainers release a fix. eventmachine, thin, yajl-ruby and panko_serializer have fixed this on their main branch but not released it; eventmachine's last release was in May 2018. Until then, pin the fixed source: copy the lines below for the gems you use into your Gemfile, replacing their existing gem lines, and run bundle install. thin needs both the thin and the eventmachine lines; with only the eventmachine line, thin 2.0.1 still fails. A git pin is a stopgap: it needs git at install time, and it installs code that is not a rubygems.org release. For the tsort error, add gem \"tsort\", the last line below; that fixed molinillo and mobility. For the other 17 gems we have no tested fix. Our source scan found removed-API identifiers in 12 default-branch checkouts, which we did not build; ruby-debug-ide depends on debase; and our metadata lookup found no GitHub source repository for four gems. Replace them, or stay on Ruby 4.0 until a fixed release ships. We tested each fix on 4.1.0-preview1, and on 4.0.7 as a check, with bundle install and a short script that loads the gem; the released eventmachine, yajl-ruby and panko_serializer failed on the preview in the same run. With both pins, thin installed and Thin::HttpParser.new succeeded on both tested Rubies. The smoke script then failed at an unrelated Thin::VERSION::STRING expression with TypeError, so this is evidence for native parser loading, not a passing complete smoke script. Executed by us; not independently reproduced.",
+    "code": "gem \"eventmachine\",\n  git: \"https://github.com/eventmachine/eventmachine.git\",\n  ref: \"e4f55083c576148e97c50cfdb6714b32eff224f6\"\ngem \"thin\",\n  git: \"https://github.com/macournoyer/thin.git\",\n  ref: \"e7886a9bca2742586da74e06fffdd2093cc3a397\"\ngem \"yajl-ruby\",\n  git: \"https://github.com/brianmario/yajl-ruby.git\",\n  ref: \"6501652d113557d976676134056aa983e7863020\"\ngem \"panko_serializer\",\n  git: \"https://github.com/yosiat/panko_serializer.git\",\n  ref: \"9267e19d779a05eae16ce0a2b2e36c3907c22e75\"\ngem \"tsort\"",
+    "testedAt": "2026-10-21"
+   },
+   "sources": [
+    {
+     "label": "ruby-lang.org: Ruby 4.1.0-preview1 Released (12 October 2026; removed C APIs; tsort promoted from a default gem to a bundled gem)",
+     "href": "https://www.ruby-lang.org/en/news/2026/10/12/ruby-4-1-0-preview1-released/",
+     "checkedAt": "2026-10-21"
+    },
+    {
+     "label": "Ruby issue tracker: Feature #21768, Remove deprecated functions (target version 4.1)",
+     "href": "https://bugs.ruby-lang.org/issues/21768",
+     "checkedAt": "2026-10-21"
+    },
+    {
+     "label": "ruby-lang.org: Ruby Releases (3.0.0 to 4.0.0, each on 25 December)",
+     "href": "https://www.ruby-lang.org/en/downloads/releases/",
+     "checkedAt": "2026-10-21"
+    },
+    {
+     "label": "rubygems.org: eventmachine versions (latest 1.2.7, 12 May 2018)",
+     "href": "https://rubygems.org/gems/eventmachine/versions",
+     "checkedAt": "2026-10-21"
+    }
+   ],
+   "leadDays": 28
+  },
+  {
+   "id": "2026-11-02-macos-26-runners-openssl-4",
+   "added": "2026-10-22",
+   "short": "macOS 26 runners: OpenSSL 4 switch is overdue",
+   "date": "2026-11-02",
+   "dateEnd": "2026-11-08",
+   "datePrecision": "window",
+   "time": null,
+   "overdue": "2026-11-09",
+   "title": "GitHub plans to switch openssl to OpenSSL 4 on macOS 26 runners: checks for version 3 will stop matching",
+   "area": "CI runners",
+   "what": "GitHub has announced that on its macOS 26 and Xcode 27 runner images, a workflow that calls openssl without a path will get OpenSSL 4 instead of OpenSSL 3: \"The default openssl command will change from OpenSSL 3.x to OpenSSL 4.x on macOS 26 Intel/Arm64 and Xcode 27 Arm64 runner images.\" The rollout was \"planned to begin on November 2, 2026 and complete by November 8, 2026, subject to compatibility validation\". As of 9 November 2026 the switch has not happened. The software lists for the newest macOS 26 Arm64 and Xcode 27 images, published on 3 and 4 November, still give OpenSSL 3.5.9 as the default openssl, with OpenSSL 4.1.0 installed alongside it, and GitHub's image build script still sets OpenSSL 3 as the default. GitHub has not given a new date. We screened 2,202 candidate openssl calls in public workflows and replayed those we could using Linux builds of OpenSSL 3.5.9, 3.6.5 and 4.0.3, as a stand-in for macOS. Within this collected sample we identified three repositories whose steps are likely to behave differently; two check for \"OpenSSL 3\". We did not run those repositories' workflows. On a GitHub-hosted macOS 26 runner on 22 October we ran the version check itself: with OpenSSL 4.0.3 first on the path, a check for \"OpenSSL 3\" left out -legacy and an old-format .p12 could not be read. Executed by us; not independently reproduced.",
+   "affected": "GitHub Actions and Azure DevOps jobs on macos-latest, macos-26 (Arm64 or Intel, any size) or the Xcode 27 image that call openssl by name. macOS 14 and 15, Ubuntu and Windows images keep their OpenSSL defaults. Our scan identified 2,202 candidate calls in 1,027 active public repositories (pushed to since 21 April 2026 and not archived). These are scan counts: at least one candidate was actually pinned to OpenSSL 3. Using the same synthetic test files under OpenSSL 3.5.9, 3.6.5 and 4.0.3, we classified 1,825 calls as unchanged, 139 as printing different text, 66 as writing different files and one as failing; 171 could not be replayed. We counted a change only when 4.0.3 differed from both 3.x versions. We read every changed call and the steps after it. Three repositories have a step that is likely to behave differently. Two decide whether to pass -legacy for an Apple .p12 file by checking that openssl version starts with \"OpenSSL 3\"; on OpenSSL 4 the check fails and the flag is dropped. In our test an RC2-40 .p12, the old Apple format, could not be read without -legacy on 3.5.9, 3.6.5 or 4.0.3. The third reads openssl version -e, which OpenSSL 4 no longer has (\"Unknown option: -e\", because engines were removed), so the library path it sets comes out empty. Other changes reach fewer scripts. Key and certificate -text dumps print hex in a new layout, with no leading 00: and 16 bytes per row; the Subject, Issuer and OID lines we checked are unchanged. Self-signed certificates made with req -x509 no longer get an Authority Key Identifier, and a certificate signed with x509 -req -CA and -extfile gets no key identifiers at all unless the file asks for them. Python 3.13 in its default strict mode then rejected such a leaf (\"Missing Authority Key Identifier\") when its CA had a keyUsage extension; none of the 7 repositories we found using -extfile met both conditions. We replayed the calls on OpenSSL built on Linux with Homebrew's options, as a stand-in for the macOS packages; on a macOS runner we ran only the tests this entry describes, not the collected workflows or codesign. We read only the run: lines of public workflows, not the scripts they call, composite actions, private repositories or self-hosted runners. Code search caps its results, so this is an incomplete scan, not a census of affected repositories. Executed by us; not independently reproduced. Update, 9 November: these jobs are not affected until the switch happens. It did not happen in the planned 2–8 November window, and GitHub has not given a new date.",
+   "check": "From your repository root, list the lines that check for OpenSSL 3, read openssl version -e or sign with an extension file, as below, and run the same search on any scripts your workflows call. A version check can also be written another way, such as cutting the number out of openssl version, so read the steps that handle certificates, keys or .p12 files too. In the 2,080 public workflow files we collected for affected jobs, this search found the lines in all three repositories above. To try a step on OpenSSL 4 before the switch, call $(brew --prefix openssl@4)/bin/openssl on a macos-26 job: GitHub lists OpenSSL 4 as already installed on these images, and on the macos-26 and macos-latest runners we used on 22 October it was: version 4.0.3. The software lists for the images published on 3 and 4 November give version 4.1.0; our tests used 4.0.3.",
+   "checkCode": "grep -rnE \\\n  -e 'grep.*OpenSSL 3' \\\n  -e 'openssl version -e' \\\n  -e '-extfile' .github",
+   "fix": {
+    "kind": "tested",
+    "text": "For a step that needs OpenSSL 3, call it by its Homebrew prefix (first lines below). On the macOS 26 runners we used on 22 October this printed OpenSSL 3.6.5, the same version as the default openssl there, and GitHub says it stays installed. Use it for openssl version -e too, which has no OpenSSL 4 equivalent. For a check that only needs to tell OpenSSL from LibreSSL, the openssl that comes with macOS, match '^OpenSSL [3-9]' instead of '^OpenSSL 3'. In our test that pattern matched the version line of OpenSSL 3.5.9, 3.6.5 and 4.0.3, while '^OpenSSL 3' did not match 4.0.3. Keep passing -legacy for RC2-40 .p12 files: on 4.0.3 such a file still failed to read without it and read with it, as on 3.x. If you sign certificates with x509 -req -CA and -extfile and a strict client checks them, add the two key identifier lines to that file (last lines below). On a macOS 26 runner with OpenSSL 4.0.3, a server certificate signed without them failed Python's default check (\"Missing Authority Key Identifier\") when the CA had keyUsage, and one signed with them passed. Executed by us; not independently reproduced.",
+    "code": "# Call OpenSSL 3 by its Homebrew prefix\nOPENSSL=\"$(brew --prefix openssl@3)/bin/openssl\"\n\"$OPENSSL\" version\n# Or accept OpenSSL 3 and later\nopenssl version | grep -q '^OpenSSL [3-9]'\n# In the -extfile file\nsubjectKeyIdentifier=hash\nauthorityKeyIdentifier=keyid,issuer",
+    "testedAt": "2026-10-22"
+   },
+   "sources": [
+    {
+     "label": "actions/runner-images issue 14856: The default OpenSSL version will be updated from 3 to 4 on macOS 26 and Xcode 27",
+     "href": "https://github.com/actions/runner-images/issues/14856",
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "label": "actions/runner-images: macOS 26 Arm64 image 20261102.0473 software list (OpenSSL 3.5.9 default; openssl@4 4.1.0)",
+     "href": "https://github.com/actions/runner-images/blob/macos-26-arm64/20261102.0473/images/macos/macos-26-arm64-Readme.md",
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "label": "actions/runner-images: Xcode 27 Arm64 image 20261104.0337 software list (OpenSSL 3.5.9 default; openssl@4 4.1.0)",
+     "href": "https://github.com/actions/runner-images/blob/xcode-27-arm64/20261104.0337/images/macos/xcode-27-arm64-Readme.md",
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "label": "actions/runner-images: install-openssl.sh on main (\"Set openssl@3 as the default OpenSSL\" for macOS 26)",
+     "href": "https://github.com/actions/runner-images/blob/main/images/macos/scripts/build/install-openssl.sh",
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "label": "actions/runner-images pull request 14825: Keep OpenSSL 3 as default alongside OpenSSL 4 (the default openssl points to openssl@3)",
+     "href": "https://github.com/actions/runner-images/pull/14825",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "label": "actions/runner-images: available images and their labels (macos-latest is macOS 26 Arm64)",
+     "href": "https://github.com/actions/runner-images#available-images",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "label": "OpenSSL 4.0 manual: x509v3_config (subjectKeyIdentifier and authorityKeyIdentifier)",
+     "href": "https://docs.openssl.org/4.0/man5/x509v3_config/",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "label": "CyberNative AI note on the macOS 26 OpenSSL 4 switch (tests on a macOS 26 runner, 22 October)",
+     "href": "https://github.com/CyberNative-AI/.github/tree/main/notes/macos-26-openssl-4",
+     "checkedAt": "2026-10-22"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-01-us-clocks-go-back-celery-beat",
+   "added": "2026-10-29",
+   "short": "US clocks go back: Celery beat pauses",
+   "date": "2026-11-01",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": "01:00 local",
+   "title": "US clocks go back: Celery beat interval tasks stop for an hour, and a beat started inside it can send crontabs in a loop",
+   "area": "Time zones",
+   "what": "Daylight saving time ends in most of the US at 02:00 local time on 1 November 2026, so 01:00 to 01:59 happens twice.",
+   "affected": "Celery beat 5.6.3, the current stable release, and 5.5.3 with beat's timezone set to America/New_York. In our controlled-clock test of the real beat scheduler, interval schedules stopped for the repeated hour: an every-minute task missed 60 runs from 06:00 to 06:59 UTC, an every-5-minute task missed 12 and an hourly task missed one. The enable_utc setting made no difference. Crontab schedules every 15 minutes or on the hour skipped the repeated hour's times in every version we tested, 5.7.0rc1 included. Daily crontab jobs at 01:30 and 02:00 ran once; nothing ran twice. Other US time zones, a beat restart inside the hour, django-celery-beat's database scheduler, and delivery through a broker to workers were not tested. Update, 2 November: a production report on Celery 5.6.2 in America/Los_Angeles describes beat sending every crontab entry in a loop from 01:00 to 02:00 PST, 149,010 messages in about 26 minutes; deleting the schedule file and restarting beat inside the hour started the loop again. We ran the report's test, which checks the schedule every 10 seconds, from 01:20 PST for 40 minutes: an every-6-minute crontab came due 204 times and an every-15-minute crontab 150 times instead of 6 and 2, on 5.5.3, 5.6.3, 5.7.0rc1 and Celery's main branch of 2 November alike. Those counts depend on the 10-second step. In Celery's own scheduler on a simulated clock, a beat started at 01:20 PST on 5.6.3, 5.7.0rc1 or main stopped waiting between checks, so a real beat sends as fast as it can loop. A daily crontab at 01:30 also looped until 01:30 PST passed; an hourly crontab did not. A beat already running before the change did not loop in our tests; the report does not say how its first loop began.",
+   "check": "Find beat's timezone in your Celery configuration (timezone, or CELERY_TIMEZONE in Django settings). If it is a US zone, entries in the beat schedule given as a number of seconds, a timedelta or schedule() are interval tasks; entries given as crontab() are crontabs.",
+   "checkCode": "pip show celery\ngrep -rniE 'timezone|beat_schedule' \\\n  --include='*.py' .",
+   "fix": {
+    "kind": "tested",
+    "text": "If a one-hour pause at 1 a.m. is acceptable, no change is needed. To keep interval tasks running, 5.7.0rc1 ran every interval task in our test; it is a release candidate, published on 18 October with Celery's fix (pull request #10769), so try it outside production first. On 5.6.3, a UTC beat timezone also ran every interval task, but it moves every crontab entry to UTC times, so use it only where every entry is an interval. Neither change stops crontabs every 15 minutes or on the hour from skipping the repeated hour's times. Executed by us; not independently reproduced. 5.7.0rc1 does not stop the loop in the test above. Celery's open pull request #10608, planned for 5.8.0, did in our run of the same test: 6 and 2 sends in 40 minutes, the correct counts.",
+    "code": "pip install \\\n  'celery==5.7.0rc1'",
+    "testedAt": "2026-10-29"
+   },
+   "sources": [
+    {
+     "label": "Celery issue #6438: Celery beat stops sending tasks on DST changes",
+     "href": "https://github.com/celery/celery/issues/6438",
+     "checkedAt": "2026-10-29"
+    },
+    {
+     "label": "Celery pull request #10769: fix Beat intervals across DST transitions (merged 6 October, in 5.7.0rc1)",
+     "href": "https://github.com/celery/celery/pull/10769",
+     "checkedAt": "2026-10-29"
+    },
+    {
+     "label": "Celery pull request #10608: crontab handling of daylight saving switches (open, planned for 5.8.0)",
+     "href": "https://github.com/celery/celery/pull/10608",
+     "checkedAt": "2026-11-02"
+    },
+    {
+     "label": "Production report on Celery pull request #10608, 2 November: beat send loop on 5.6.2 at the US fall-back, with a test",
+     "href": "https://github.com/celery/celery/pull/10608#issuecomment-6567233633",
+     "checkedAt": "2026-11-02"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-07-rails-8-0-security-support-ends",
+   "added": "2026-11-04",
+   "short": "Rails 8.0 security support ends",
+   "date": "2026-11-07",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": null,
+   "title": "Rails 8.0 security support ends",
+   "area": "Ruby",
+   "what": "Rails' maintenance policy lists the 8.0 series as supported for security issues until 7 November 2026, and the 8.1 series until 10 October 2027. For a series it no longer supports, the policy says the Rails team may publish backports of fixes to git, \"however there will be no new versions released\". On 4 November 2026 the Rails team released 8.0.5.2 and 8.1.4.1 to fix 21 security issues; its announcement says \"Security support for the 8.0 series ends on November 7, 2026\" and that older versions of Rails are unsupported.",
+   "affected": "Applications whose bundle resolves Rails 8.0, including self-hosted applications whose release ships it. Rails 7.2, 7.1 and 6.1 are already outside security support: the 4 November release has no fix for them.",
+   "check": "In the application's Gemfile.lock, read the version on the rails line under specs, or on the railties line if the bundle has no rails gem. A version that starts with 8.0 is on this series. Run the command below in the folder that holds that file: it prints those lines, and nothing for any other version. For an application in a container, run it inside the container in that folder, or read the Gemfile.lock in the application's repository at the release tag your image was built from.",
+   "checkCode": "grep -nE '^ {4}(rails|railties) \\(8\\.0\\.' Gemfile.lock",
+   "fix": {
+    "kind": "guide",
+    "text": "Move to Rails 8.1, which the policy lists as supported for security issues until 10 October 2027. For a packaged application, that means a release from its maintainers. We did not test an upgrade."
+   },
+   "sources": [
+    {
+     "label": "Rails maintenance policy: \"8.0.x - Supported until November 7, 2026\" (security issues)",
+     "href": "https://rubyonrails.org/maintenance",
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "label": "Rails security releases: 8.0.5.2 and 8.1.4.1 (4 November 2026)",
+     "href": "https://discuss.rubyonrails.org/t/rails-security-releases-8-0-5-2-and-8-1-4-1/91802",
+     "checkedAt": "2026-11-04"
+    }
+   ],
+   "see": {
+    "lead": "On Rails 8.0, 7.2 or older?",
+    "href": "/guides/rails-security-release-november-2026-is-my-app-patched/",
+    "label": "Is your self-hosted Rails app patched: the version check, the ImageMagick conditions and the workarounds Rails publishes."
+   }
+  },
+  {
+   "id": "2027-04-30-node-22-end-of-life",
+   "added": "2026-11-05",
+   "short": "Node 22 reaches end of life",
+   "date": "2027-04-30",
+   "dateEnd": null,
+   "datePrecision": "day",
+   "time": null,
+   "title": "Node 22 reaches end of life, and the node:22 images stop getting updates",
+   "area": "Node.js",
+   "leadDays": 30,
+   "what": "Node.js 22 (Jod) reaches end of life on 30 April 2027. Node.js says a release line at end of life no longer receives updates, security patches included. The official Docker image drops a release line from its build list at about that time: Node 20, which reached end of life on 30 April 2026, was dropped on 1 May 2026, and Node 18, end of life 30 April 2025, on 28 May 2025. The tags are not deleted: on 4 November 2026 Docker Hub still served node:20 and node:18, last updated on 22 April 2026 and 23 May 2025. So node:22 keeps pulling after it is dropped, but it is no longer rebuilt: no Node.js fixes and no Debian or Alpine package updates.",
+   "affected": "Dockerfile stages, Compose services and CI jobs on a node:22 tag (node:22, node:22-slim, node:22-alpine, node:22-bookworm and the like, or the codename tags node:jod and node:lts-jod), and CI setup steps, .nvmrc, .node-version and .tool-versions files that install Node 22, including by its name lts/jod. Nothing fails on 30 April itself: builds keep working, but security fixes released for newer Node.js lines after that date do not come to Node 22. node:22 and node:22-slim are Debian 12 (bookworm).",
+   "check": "Run this from your repository root. It lists lines that pick Node 22 in Dockerfiles, Containerfiles, YAML files, .nvmrc, .node-version and .tool-versions outside node_modules: node:22 and node:jod images, lts/jod, node-version: lines that name 22, and version files that start with 22. A version range in package.json, such as >=22, is not listed and does not need to change. It can print a range in a node-version: line, such as '>=22', which runs the newest matching Node.js already on the runner, or downloads the newest release if none matches; check those. It misses versions set through a variable; read your ARG and env lines too. On our test files, run with GNU grep 3.12 in bash and dash, it printed every line it should, and its only extra line was such a range.",
+   "checkCode": "grep -rniIE --exclude-dir=node_modules \\\n  --include='*ockerfile*' --include='*ontainerfile*' \\\n  --include='*.yml' --include='*.yaml' \\\n  --include='.nvmrc' --include='.node-version' \\\n  --include='.tool-versions' \\\n  -e 'node:(22|jod|lts-jod)\\b' -e 'lts/jod' \\\n  -e 'node-version:(.*[^.0-9])?22([^0-9]|$)' \\\n  -e '^(v|nodejs |node )?22(\\.|[[:space:]]|$)' .",
+   "fix": {
+    "kind": "guide",
+    "text": "Move to Node 24, supported until 30 April 2028, or Node 26, supported until 30 April 2029, and run your own tests on it; we did not test whether a given project works there. node:24 and node:24-slim stay on Debian 12 and still include Yarn v1 and Corepack. node:26 images include neither, and node:26 and node:26-slim are Debian 13 (trixie), whose apt has no apt-key. Install lines for Yarn, Corepack and pnpm are in the guide below.",
+    "code": "# Before\nFROM node:22-slim\n# After\nFROM node:24-slim",
+    "href": "/guides/corepack-yarn-pnpm-not-found-node-26-docker/",
+    "label": "Install lines for Yarn, Corepack and pnpm, checked on Node 24 and 26"
+   },
+   "sources": [
+    {
+     "label": "Node.js release schedule: Node.js 22 end of life 30 April 2027; Node.js 24 until 30 April 2028; Node.js 26 until 30 April 2029",
+     "href": "https://github.com/nodejs/Release/blob/main/schedule.json",
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "label": "Node.js: End-Of-Life (\"it will no longer receive updates, including security patches\")",
+     "href": "https://nodejs.org/en/about/eol",
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "label": "docker-library/official-images commit: Drop Node.js v20 (1 May 2026)",
+     "href": "https://github.com/docker-library/official-images/commit/72eb59dfa93105cf03394c7c6f7517ecc8b0b520",
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "label": "docker-library/official-images commit: Drop EOL Node.js 18 (28 May 2025)",
+     "href": "https://github.com/docker-library/official-images/commit/7a83369b17bd6ded3a2081efafc3a225b9822f23",
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "label": "Docker Hub: node:20 tag record (last updated 22 April 2026)",
+     "href": "https://hub.docker.com/v2/repositories/library/node/tags/20",
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "label": "docker-library/official-images: the published node tag list (node:22 tags)",
+     "href": "https://github.com/docker-library/official-images/blob/master/library/node",
+     "checkedAt": "2026-11-04"
+    }
+   ]
+  }
+ ]
+}

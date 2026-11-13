@@ -1,0 +1,17 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ai.cybernative/breakage-calendar",
+  "title": "Breakage Calendar",
+  "description": "Which dated upstream breaks hit your repository or dependency list, and the tested fix.",
+  "repository": { "url": "https://github.com/CyberNative-AI/breakage-calendar-mcp", "source": "github" },
+  "websiteUrl": "https://cybernative.ai/breakage-calendar/",
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/CyberNative-AI/breakage-calendar-mcp/releases/download/v0.1.0/breakage-calendar-mcp-0.1.0.mcpb",
+      "fileSha256": "FILLED_AT_RELEASE",
+      "transport": { "type": "stdio" }
+    }
+  ]
+}
