@@ -5,6 +5,8 @@ That is this server's real answer on 13 November 2026 (five dates in all), from 
 
 An MCP server (and a command) for coding agents that upgrade, pin or deploy a project. It answers: **which dated breaks hit this repository or this dependency list, and what is the tested fix?** No key, no account, no dependencies.
 
+**Prefer an agent skill?** Use it in your coding agent: [dated-breaks-skill](https://github.com/CyberNative-AI/dated-breaks-skill), a `SKILL.md` folder and one Python script (standard library only), with no MCP setup.
+
 ## Install
 
 Node.js 18.17 or later. Every client starts the same command:
