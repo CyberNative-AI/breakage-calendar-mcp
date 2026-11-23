@@ -1,5 +1,7 @@
 # Breakage Calendar MCP server
 
+[![CyberNative-AI/breakage-calendar-mcp MCP server](https://glama.ai/mcp/servers/CyberNative-AI/breakage-calendar-mcp/badges/score.svg)](https://glama.ai/mcp/servers/CyberNative-AI/breakage-calendar-mcp)
+
 `check docker:postgres:latest pypi:celery==5.4.0 pypi:langsmith runner:macos-14` → **`postgres:latest` is due to move to 19 on 19 November 2026: HITS, tested fix (pin `postgres:18`; we ran it on 13 November).** The macOS 14 runner was retired on 2 November: HITS. `langsmith`'s evaluator sends `gpt-4o` by default, and OpenAI removes the snapshots `gpt-4o` points to on 14 January 2027: MAY HIT. Celery beat paused for the repeated hour in our tests when US clocks went back on 1 November: MAY HIT, tested fix.
 That is this server's real answer on 13 November 2026 (five dates in all), from the [Breakage Calendar](https://cybernative.ai/breakage-calendar/): 65 dated upstream changes that break working software, each with the check that finds it and, for 29 of them, a fix we ran ourselves.
 
